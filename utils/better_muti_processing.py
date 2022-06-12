@@ -1,13 +1,14 @@
-from multiprocessing import Queue,Process
+from multiprocessing import Queue,Process,Pool
 
 import time
+import os
 
 def func(n,output_queue):
     start = time.time()
 
     print(n, time.time())
     count=0
-    for i in range(10000) :
+    for i in range(10000000) :
         output_queue.put(i)
         count+= i
     stop = time.time()
@@ -16,6 +17,7 @@ def func(n,output_queue):
 if __name__ == '__main__':
     start = time.time()
     output = Queue()
+    print(os.cpu_count())
     thread_list = []
     for i in range(10):
         th = Process(target=func, args=(i,output))
